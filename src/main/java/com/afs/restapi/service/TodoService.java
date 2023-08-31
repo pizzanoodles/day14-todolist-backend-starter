@@ -1,5 +1,6 @@
 package com.afs.restapi.service;
 
+import com.afs.restapi.advice.ErrorResponse;
 import com.afs.restapi.entity.Todo;
 import com.afs.restapi.repository.TodoRepository;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,13 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    public void delete(Integer id) {
+        todoRepository.deleteById(id);
+    }
+
+    public Todo update(Integer id, Todo updatedTodo) {
+        Todo tobeUpdatedTodo = todoRepository.findById(id).orElseThrow(RuntimeException::new);
+        tobeUpdatedTodo.setDone(updatedTodo.getDone());
+        return todoRepository.save(tobeUpdatedTodo);
+    }
 }
